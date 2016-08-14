@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
-public class reduced_string {
-
+public class Pangrams {
+	
 	private static StreamTokenizer inputReader = new StreamTokenizer(
 			new BufferedReader(new InputStreamReader(System.in)));
 
@@ -27,39 +29,24 @@ public class reduced_string {
 
 	public static void main(String[] args) throws IOException {
 		String input = reader.readLine();
-		System.out.println(reduce(input));
-	}
-
-	private static String reduce(String input) {
-		String output = "";
-
-		while (true) {
-			int start = 0;
-			int end = start + 1;
-
-			while (start < input.length()) {
-				while (end < input.length() && input.charAt(end) == input.charAt(start)) {
-					end++;
-				}
-
-				if ((end - start) % 2 == 1) {
-					output += (input.charAt(start) + "");
-				}
-
-				start = end;
-				end = start + 1;
-			}
-
-			if (input.equals(output)) {
-				if (input.equals("")) {
-					return "Empty String";
-				} else {
-					return output;
-				}
-			} else {
-				input = output;
-				output = "";
+		
+		
+		Set<Character> usedChars = new HashSet<>();
+		
+		for (int i = 0; i < input.length(); i++) {
+			char ch = input.charAt(i);
+			
+			if (Character.isAlphabetic(ch)) {
+				usedChars.add(Character.toLowerCase(ch));
 			}
 		}
+		
+		if (usedChars.size() == 26) {
+			System.out.println("pangram");
+		} else {
+			System.out.println("not pangram");
+		}
+
 	}
+
 }
